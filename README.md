@@ -30,5 +30,5 @@ ddmxh code 20200801 amagiddmxh # check out how many line of codes were written b
 
 ### References
 
-- https://github.com/Pana/nrm
-- 
+- <https://github.com/Pana/nrm>
+- <https://github.com/vuejs/vue-cli>
