@@ -3,9 +3,10 @@ const program = require('commander')
 
 const PKG = require('./package.json')
 const NPM_PROXY_ATTRS = ['proxy', 'https-proxy']
+
 // const
 
-const proxyAddress = process.env['http_proxy']
+const DEFAULT_PROXY_ADDRESS = process.env['http_proxy']
 
 program.version(PKG.version, '-v', '--version').usage('[options] <args ...>')
 
@@ -13,7 +14,7 @@ program
   .option(
     '-a, --address [proxyAddress]',
     'Specificify proxy address or leave it to use default from env',
-    proxyAddress
+    DEFAULT_PROXY_ADDRESS
   )
   .description('Default to set proxies')
   .action(onSetProxy)
@@ -23,11 +24,16 @@ program
   .description('Delete proxies config on npm')
   .action(onDelProxy)
 
+program
+  .command('proxy <target>')
+  .description('Set proxy of <tartget>')
+  .action(onTargetProxy)
+
 program.parse(process.argv)
 
 /*---------------------------*/
 
-function config(attrArray, map, index = 0) {
+function npmConfig(attrArray, map, index = 0) {
   return new Promise((resolve, reject) => {
     const attr = attrArray[index]
     const command = map.hasOwnProperty(attr)
@@ -41,7 +47,7 @@ function config(attrArray, map, index = 0) {
     })
   }).then((next) => {
     return next < attrArray.length
-      ? config(attrArray, map, next)
+      ? npmConfig(attrArray, map, next)
       : Promise.resolve()
   })
 }
@@ -64,7 +70,7 @@ function onSetProxy({ address }) {
     (acc, cur) => ({ ...acc, [cur]: address }),
     {}
   )
-  return config(NPM_PROXY_ATTRS, map)
+  return npmConfig(NPM_PROXY_ATTRS, map)
     .then(() => {
       printMessages(['', `proxy been set to ${address}`, ''])
     })
@@ -74,7 +80,7 @@ function onSetProxy({ address }) {
 }
 
 function onDelProxy() {
-  return config(NPM_PROXY_ATTRS, {})
+  return npmConfig(NPM_PROXY_ATTRS, {})
     .then(() => {
       printMessages(['', `proxy been deleted`, ''])
     })
@@ -83,7 +89,20 @@ function onDelProxy() {
     })
 }
 
+function onTargetProxy(target) {
+  // if (target === 'git') {
+  //   shx
+  // }
+  const gitProxyKeys = ['http.proxy', 'https.proxy']
+  const gitAttrs = [, , 'git', 'config', 'set', '--global']
+
+  // gitProxyKeys.forEach((key) => {
+  //   shx(gitAttrs.concat([key, DEFAULT_PROXY_ADDRESS]))
+  // })
+}
+
 module.exports = {
   onSetProxy,
   onDelProxy,
+  onTargetProxy,
 }

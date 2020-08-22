@@ -5,7 +5,10 @@
   "main": "index.js",
   "dependencies": {
     "commander": "^6.0.0",
-    "npm": "latest"
+    "execa": "^4.0.3",
+    "minimist": "^1.2.5",
+    "npm": "latest",
+    "shx": "^0.3.2"
   },
   "devDependencies": {
     "@ddmxh/prettier-config": "0.0.1",
