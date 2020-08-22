@@ -26,9 +26,14 @@ ddmxh use cnpm # it should set npm registry to cnpmjs.org and cancel the proxy
 ddmxh code today # checkout how many lines of code wrttien today
 ddmxh code yesterday # same but to yesterday
 ddmxh code 20200801 amagiddmxh # check out how many line of codes were written by amagiddmxh at date 20200801
+ddmxh code repo [name] # create repo
+ddmxh code repo [upload | up] # push to master
 ```
 
 ### References
 
-- <https://github.com/Pana/nrm>
-- <https://github.com/vuejs/vue-cli>
+- <https://github.com/Pana/nrm> - npm version control
+- <https://github.com/vuejs/vue-cli> - vue project CLI helper
+- <https://github.com/shelljs/shx> - execute safe shell on npm
+- <http://github.com/sapegin/mrm> - sync your configurations
+- <https://gist.github.com/alexpchin/dc91e723d4db5018fef8> - create new repo
